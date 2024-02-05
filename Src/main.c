@@ -75,53 +75,54 @@ int main(void)
 
   // Enable the GPIOC clock
   RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
+  // Enable the GPIOA clock
+  RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
 
-  // Clear the bits for PC6-9
+  // Clear the bits for PC6-7
   GPIOC->MODER &= ~(3 << 12);
   GPIOC->MODER &= ~(3 << 14);
-  // GPIOC->MODER &= ~(3 << 16);
-  // GPIOC->MODER &= ~(3 << 18);
-  // Setting PC6-9 to General-Purpose Output Mode
-  // GPIOC->MODER |= (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
+  // Setting PC6-7 to General-Purpose Output Mode
   GPIOC->MODER |= (1 << 12) | (1 << 14);
-  // GPIOC->MODER |= (1 << 16) | (1 << 18);
-  // Setting PC6-9 to Push-Pull Output Type
+  // Setting PC6-7 to Push-Pull Output Type
   GPIOC->OTYPER &= ~(1 << 6);
   GPIOC->OTYPER &= ~(1 << 7);
-  // GPIOC->OTYPER &= ~(1 << 8);
-  // GPIOC->OTYPER &= ~(1 << 9);
-  // Set PC6-9 to Low Speed
-  GPIOC->OSPEEDR |= (0 << 12);
-  GPIOC->OSPEEDR |= (0 << 14);
-  // GPIOC->OSPEEDR |= (0 << 16);
-  // GPIOC->OSPEEDR |= (0 << 18);
-  // Clear the bits for PC6-9
+  // Set PC6-7 to Low Speed
+  GPIOC->OSPEEDR &= ~(0 << 12);
+  GPIOC->OSPEEDR &= ~(0 << 14);
+  // Clear the bits for PC6-7
   // This also sets the pull-up/pull-down resistors to no pull-up/pull-down since the bits are 00
   GPIOC->PUPDR &= ~(3 << 12);
   GPIOC->PUPDR &= ~(3 << 14);
-  // GPIOC->PUPDR &= ~(3 << 16);
-  // GPIOC->PUPDR &= ~(3 << 18);
 
   // Setting PA0 to Digital Input Mode
-  // GPIOA->MODER &= ~(3 << 0);
+  GPIOA->MODER &= ~(3 << 0);
   // Set PA0 to Low Speed
-  // GPIOA->OSPEEDR |= (0 << 0);
+  GPIOA->OSPEEDR &= 0;
   // Set PA0 to Pull Down Resistor
-  // GPIOA->PUPDR |= (2 << 0);
+  GPIOA->PUPDR |= (2 << 0);
 
   //Set PC6 to High
   GPIOC->ODR |= (1 << 6);
   //Set PC7 to Low
   GPIOC->ODR &= ~(1 << 7);
 
+  uint32_t debouncer = 0;
   while (1)
   {
-    HAL_Delay(200); // Delay 200ms
-    // Toggle the output state of both PC8 and PC9
-    GPIOC->ODR ^= (1 << 6);
-    GPIOC->ODR ^= (1 << 7);
+    HAL_Delay(2); // Delay 5ms
+
+    debouncer = (debouncer << 1); // Always shift every loop iteration
+    if(GPIOA->IDR & (1 << 0)) // If the button is pressed
+    {
+      debouncer |= 1; // Set the LSB to 1
+    }
+    
+    if(debouncer == 0x0FFFFFFF)
+    {
+      GPIOC->ODR ^= (1 << 6); // Toggle PC6
+      GPIOC->ODR ^= (1 << 7); // Toggle PC7
+    }
   }
-  
 
 }
 
