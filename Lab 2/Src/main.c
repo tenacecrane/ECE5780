@@ -141,6 +141,9 @@ int main(void)
   NVIC_EnableIRQ(EXTI0_1_IRQn);
   NVIC_SetPriority(EXTI0_1_IRQn, 1);
 
+  // Set the priority of SysTick to 2 (medium), which starves the blue LED of CPU time
+  NVIC_SetPriority(SysTick_IRQn, 2);
+
   //Set PC8 to High
   GPIOC->ODR |= (1 << 8);
   
