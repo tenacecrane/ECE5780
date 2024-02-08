@@ -139,7 +139,7 @@ int main(void)
 
   //Enable the EXTI0 interrupt and set the priority to 1
   NVIC_EnableIRQ(EXTI0_1_IRQn);
-  NVIC_SetPriority(EXTI0_1_IRQn, 1);
+  NVIC_SetPriority(EXTI0_1_IRQn, 3);
 
   // Set the priority of SysTick to 2 (medium), which starves the blue LED of CPU time
   NVIC_SetPriority(SysTick_IRQn, 2);
