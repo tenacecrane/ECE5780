@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
   30:Src/main.c    ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   31:Src/main.c    ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   32:Src/main.c    ****  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 2
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 2
 
 
   33:Src/main.c    ****  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
   39              		.loc 1 74 11 is_stmt 0 view .LVU2
   40 0002 104B     		ldr	r3, .L5
   41 0004 5B69     		ldr	r3, [r3, #20]
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 3
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 3
 
 
   42              		.loc 1 74 6 view .LVU3
@@ -178,7 +178,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
   81:Src/main.c    ****     GPIOC->ODR ^= (1 << 9);
   75              		.loc 1 81 16 view .LVU14
   76 002c 5E40     		eors	r6, r3
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 4
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 4
 
 
   77 002e 6661     		str	r6, [r4, #20]
@@ -238,7 +238,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  103:Src/main.c    ****   GPIOC->MODER &= ~(3 << 16);
  104:Src/main.c    ****   GPIOC->MODER &= ~(3 << 18);
  105:Src/main.c    ****   // Setting PC6, PC7, PC8 and PC9 to General-Purpose Output Mode
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 5
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 5
 
 
  106:Src/main.c    ****   GPIOC->MODER |= (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
@@ -275,9 +275,9 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  137:Src/main.c    ****   //Set SYSCFG to allow for EXTI0
  138:Src/main.c    ****   SYSCFG->EXTICR[0] |= (0 << 0);
  139:Src/main.c    **** 
- 140:Src/main.c    ****   //Enable the EXTI0 interrupt and set the priority to 1
+ 140:Src/main.c    ****   //Enable the EXTI0 interrupt and set the priority to 3
  141:Src/main.c    ****   NVIC_EnableIRQ(EXTI0_1_IRQn);
- 142:Src/main.c    ****   NVIC_SetPriority(EXTI0_1_IRQn, 3);
+ 142:Src/main.c    ****   NVIC_SetPriority(EXTI0_1_IRQn, 1);
  143:Src/main.c    **** 
  144:Src/main.c    ****   // Set the priority of SysTick to 2 (medium), which starves the blue LED of CPU time
  145:Src/main.c    ****   NVIC_SetPriority(SysTick_IRQn, 2);
@@ -298,7 +298,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  160:Src/main.c    **** {
  161:Src/main.c    **** 
  162:Src/main.c    ****   RCC_OscInitTypeDef RCC_OscInitStruct;
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 6
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 6
 
 
  163:Src/main.c    ****   RCC_ClkInitTypeDef RCC_ClkInitStruct;
@@ -358,7 +358,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  117              	.LVL1:
  118              	.L8:
  211:Src/main.c    ****   /* USER CODE BEGIN Error_Handler_Debug */
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 7
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 7
 
 
  212:Src/main.c    ****   /* User can add his own implementation to report the HAL error return state */
@@ -418,7 +418,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  169:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
  161              		.loc 1 169 3 is_stmt 1 view .LVU33
  169:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 8
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 8
 
 
  162              		.loc 1 169 41 is_stmt 0 view .LVU34
@@ -478,7 +478,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  190:Src/main.c    **** 
  200              		.loc 1 190 3 is_stmt 1 view .LVU51
  190:Src/main.c    **** 
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 9
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 9
 
 
  201              		.loc 1 190 22 is_stmt 0 view .LVU52
@@ -538,7 +538,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  250              		.thumb_func
  252              	main:
  253              	.LFB41:
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 10
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 10
 
 
   89:Src/main.c    ****   HAL_Init();
@@ -598,7 +598,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  296 0024 0243     		orrs	r2, r0
  297 0026 9A61     		str	r2, [r3, #24]
  101:Src/main.c    ****   GPIOC->MODER &= ~(3 << 14);
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 11
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 11
 
 
  298              		.loc 1 101 3 is_stmt 1 view .LVU71
@@ -658,7 +658,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  336              		.loc 1 108 8 is_stmt 0 view .LVU87
  337 0054 5A68     		ldr	r2, [r3, #4]
  108:Src/main.c    ****   GPIOC->OTYPER &= ~(1 << 7);
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 12
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 12
 
 
  338              		.loc 1 108 17 view .LVU88
@@ -718,7 +718,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  375 007c 9A68     		ldr	r2, [r3, #8]
  115:Src/main.c    ****   GPIOC->OSPEEDR &= ~(0 << 18);
  376              		.loc 1 115 18 view .LVU106
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 13
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 13
 
 
  377 007e 9A60     		str	r2, [r3, #8]
@@ -778,7 +778,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  413 00a2 0324     		movs	r4, #3
  414 00a4 A143     		bics	r1, r4
  415 00a6 1160     		str	r1, [r2]
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 14
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 14
 
 
  127:Src/main.c    ****   // Set PA0 to Pull Down Resistor
@@ -828,7 +828,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  138:Src/main.c    **** 
  446              		.loc 1 138 21 view .LVU139
  447 00c8 9160     		str	r1, [r2, #8]
- 141:Src/main.c    ****   NVIC_SetPriority(EXTI0_1_IRQn, 3);
+ 141:Src/main.c    ****   NVIC_SetPriority(EXTI0_1_IRQn, 1);
  448              		.loc 1 141 3 is_stmt 1 view .LVU140
  449              	.LVL13:
  450              	.LBB8:
@@ -838,7 +838,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
    2:Drivers/CMSIS/Include/core_cm0.h ****  * @file     core_cm0.h
    3:Drivers/CMSIS/Include/core_cm0.h ****  * @brief    CMSIS Cortex-M0 Core Peripheral Access Layer Header File
    4:Drivers/CMSIS/Include/core_cm0.h ****  * @version  V5.0.5
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 15
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 15
 
 
    5:Drivers/CMSIS/Include/core_cm0.h ****  * @date     28. May 2018
@@ -898,7 +898,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
   59:Drivers/CMSIS/Include/core_cm0.h ****   \ingroup Cortex_M0
   60:Drivers/CMSIS/Include/core_cm0.h ****   @{
   61:Drivers/CMSIS/Include/core_cm0.h ****  */
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 16
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 16
 
 
   62:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -958,7 +958,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  116:Drivers/CMSIS/Include/core_cm0.h **** 
  117:Drivers/CMSIS/Include/core_cm0.h **** 
  118:Drivers/CMSIS/Include/core_cm0.h **** #ifdef __cplusplus
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 17
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 17
 
 
  119:Drivers/CMSIS/Include/core_cm0.h **** }
@@ -1018,7 +1018,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  173:Drivers/CMSIS/Include/core_cm0.h **** 
  174:Drivers/CMSIS/Include/core_cm0.h **** 
  175:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 18
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 18
 
 
  176:Drivers/CMSIS/Include/core_cm0.h **** /*******************************************************************************
@@ -1078,7 +1078,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  230:Drivers/CMSIS/Include/core_cm0.h **** {
  231:Drivers/CMSIS/Include/core_cm0.h ****   struct
  232:Drivers/CMSIS/Include/core_cm0.h ****   {
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 19
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 19
 
 
  233:Drivers/CMSIS/Include/core_cm0.h ****     uint32_t ISR:9;                      /*!< bit:  0.. 8  Exception number */
@@ -1138,7 +1138,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  287:Drivers/CMSIS/Include/core_cm0.h **** {
  288:Drivers/CMSIS/Include/core_cm0.h ****   struct
  289:Drivers/CMSIS/Include/core_cm0.h ****   {
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 20
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 20
 
 
  290:Drivers/CMSIS/Include/core_cm0.h ****     uint32_t _reserved0:1;               /*!< bit:      0  Reserved */
@@ -1198,7 +1198,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  344:Drivers/CMSIS/Include/core_cm0.h ****   __IOM uint32_t ICSR;                   /*!< Offset: 0x004 (R/W)  Interrupt Control and State Regi
  345:Drivers/CMSIS/Include/core_cm0.h ****         uint32_t RESERVED0;
  346:Drivers/CMSIS/Include/core_cm0.h ****   __IOM uint32_t AIRCR;                  /*!< Offset: 0x00C (R/W)  Application Interrupt and Reset 
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 21
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 21
 
 
  347:Drivers/CMSIS/Include/core_cm0.h ****   __IOM uint32_t SCR;                    /*!< Offset: 0x010 (R/W)  System Control Register */
@@ -1258,7 +1258,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  401:Drivers/CMSIS/Include/core_cm0.h **** 
  402:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_AIRCR_VECTKEYSTAT_Pos          16U                                            /*!< SCB 
  403:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_AIRCR_VECTKEYSTAT_Msk          (0xFFFFUL << SCB_AIRCR_VECTKEYSTAT_Pos)        /*!< SCB 
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 22
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 22
 
 
  404:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -1318,7 +1318,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  458:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_CTRL_COUNTFLAG_Msk         (1UL << SysTick_CTRL_COUNTFLAG_Pos)            /*!< SysT
  459:Drivers/CMSIS/Include/core_cm0.h **** 
  460:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_CTRL_CLKSOURCE_Pos          2U                                            /*!< SysT
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 23
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 23
 
 
  461:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_CTRL_CLKSOURCE_Msk         (1UL << SysTick_CTRL_CLKSOURCE_Pos)            /*!< SysT
@@ -1378,7 +1378,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  515:Drivers/CMSIS/Include/core_cm0.h **** /**
  516:Drivers/CMSIS/Include/core_cm0.h ****   \brief     Mask and shift a register value to extract a bit filed value.
  517:Drivers/CMSIS/Include/core_cm0.h ****   \param[in] field  Name of the register bit field.
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 24
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 24
 
 
  518:Drivers/CMSIS/Include/core_cm0.h ****   \param[in] value  Value of register. This parameter is interpreted as an uint32_t type.
@@ -1438,7 +1438,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  572:Drivers/CMSIS/Include/core_cm0.h ****   #endif
  573:Drivers/CMSIS/Include/core_cm0.h ****   #include CMSIS_NVIC_VIRTUAL_HEADER_FILE
  574:Drivers/CMSIS/Include/core_cm0.h **** #else
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 25
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 25
 
 
  575:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_SetPriorityGrouping    __NVIC_SetPriorityGrouping
@@ -1498,7 +1498,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  626:Drivers/CMSIS/Include/core_cm0.h ****   {
  627:Drivers/CMSIS/Include/core_cm0.h ****     NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
  456              		.loc 2 627 5 view .LVU143
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 26
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 26
 
 
  457              		.loc 2 627 20 is_stmt 0 view .LVU144
@@ -1558,7 +1558,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  670:Drivers/CMSIS/Include/core_cm0.h **** /**
  671:Drivers/CMSIS/Include/core_cm0.h ****   \brief   Get Pending Interrupt
  672:Drivers/CMSIS/Include/core_cm0.h ****   \details Reads the NVIC pending register and returns the pending bit for the specified device spe
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 27
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 27
 
 
  673:Drivers/CMSIS/Include/core_cm0.h ****   \param [in]      IRQn  Device specific interrupt number.
@@ -1618,7 +1618,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  727:Drivers/CMSIS/Include/core_cm0.h ****   \param [in]  priority  Priority to set.
  728:Drivers/CMSIS/Include/core_cm0.h ****   \note    The priority cannot be set for every processor exception.
  729:Drivers/CMSIS/Include/core_cm0.h ****  */
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 28
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 28
 
 
  730:Drivers/CMSIS/Include/core_cm0.h **** __STATIC_INLINE void __NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
@@ -1638,8 +1638,8 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  477 00d6 1949     		ldr	r1, .L18+44
  478 00d8 0840     		ands	r0, r1
  479              		.loc 2 734 102 view .LVU152
- 480 00da C021     		movs	r1, #192
- 481 00dc 0902     		lsls	r1, r1, #8
+ 480 00da 8021     		movs	r1, #128
+ 481 00dc C901     		lsls	r1, r1, #7
  482 00de 0143     		orrs	r1, r0
  483              		.loc 2 734 30 view .LVU153
  484 00e0 1151     		str	r1, [r2, r4]
@@ -1678,7 +1678,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  509              		.loc 2 739 30 view .LVU163
  510              	.LBE13:
  511              	.LBE12:
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 29
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 29
 
 
  148:Src/main.c    ****   
@@ -1738,30 +1738,30 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 1
  558              		.file 3 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h"
  559              		.file 4 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
  560              		.file 5 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 30
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 30
 
 
  561              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
  562              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h"
  563              		.file 8 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_cortex.h"
  564              		.file 9 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s 			page 31
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s 			page 31
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:19     .text.EXTI0_1_IRQHandler:00000000 $t
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:25     .text.EXTI0_1_IRQHandler:00000000 EXTI0_1_IRQHandler
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:97     .text.EXTI0_1_IRQHandler:00000044 $d
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:103    .text._Error_Handler:00000000 $t
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:109    .text._Error_Handler:00000000 _Error_Handler
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:127    .rodata.SystemClock_Config.str1.4:00000000 $d
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:132    .text.SystemClock_Config:00000000 $t
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:138    .text.SystemClock_Config:00000000 SystemClock_Config
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:241    .text.SystemClock_Config:0000006c $d
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:246    .text.main:00000000 $t
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:252    .text.main:00000000 main
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc1l5X1D.s:540    .text.main:00000110 $d
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:19     .text.EXTI0_1_IRQHandler:00000000 $t
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:25     .text.EXTI0_1_IRQHandler:00000000 EXTI0_1_IRQHandler
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:97     .text.EXTI0_1_IRQHandler:00000044 $d
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:103    .text._Error_Handler:00000000 $t
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:109    .text._Error_Handler:00000000 _Error_Handler
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:127    .rodata.SystemClock_Config.str1.4:00000000 $d
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:132    .text.SystemClock_Config:00000000 $t
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:138    .text.SystemClock_Config:00000000 SystemClock_Config
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:241    .text.SystemClock_Config:0000006c $d
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:246    .text.main:00000000 $t
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:252    .text.main:00000000 main
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cchZWYyJ.s:540    .text.main:00000110 $d
 
 UNDEFINED SYMBOLS
 HAL_Delay

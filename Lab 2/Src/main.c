@@ -137,7 +137,7 @@ int main(void)
   //Set SYSCFG to allow for EXTI0
   SYSCFG->EXTICR[0] |= (0 << 0);
 
-  //Enable the EXTI0 interrupt and set the priority to 1
+  //Enable the EXTI0 interrupt and set the priority to 3
   NVIC_EnableIRQ(EXTI0_1_IRQn);
   NVIC_SetPriority(EXTI0_1_IRQn, 3);
 
@@ -146,6 +146,10 @@ int main(void)
 
   //Set PC8 to High
   GPIOC->ODR |= (1 << 8);
+
+  // Puts all the NVIC bits in an array. There are 8 bits in each register, and there are 8 registers.
+  // The array is 8x8, so it has 64 elements.
+  // Of the 64 bits, only 32 are used. The first 32 are for the IRQs, and the second 32 are for the priority.
   
   while (1)
   {
