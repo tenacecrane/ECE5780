@@ -70,49 +70,41 @@ int main(void)
 {
   SystemClock_Config();
 
-  // Enable TIM2, TIM3, PC8 (Green LED), PC9 (Orange LED)
-  RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+  // Enable TIM3, PC6 (Red LED), PC7 (Blue LED)
   RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
   RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
 
-  // Set PC8 and PC9 to output
-  GPIOC->MODER |= (1 << 16);
-  GPIOC->MODER |= (1 << 18);
+  // Set PC6 and PC7 to alternate function mode
+  GPIOC->MODER &= ~(3 << 12);
+  GPIOC->MODER |= (2 << 12);
+  GPIOC->MODER &= ~(3 << 14);
+  GPIOC->MODER |= (2 << 14);
 
-  // Set PC8 and PC9 to push-pull
-  GPIOC->OTYPER &= ~(1 << 8);
-  GPIOC->OTYPER &= ~(1 << 9);
+  // Set PC6 and PC7 to low speed
+  GPIOC->OSPEEDR &= ~(3 << 12);
+  GPIOC->OSPEEDR &= ~(3 << 14);
 
-  // Set PC8 and PC9 to low speed
-  GPIOC->OSPEEDR &= ~(0 << 16);
-  GPIOC->OSPEEDR &= ~(0 << 18);
-
-  // Set PC8 and PC9 to no pull-up, no pull-down
-  GPIOC->PUPDR &= ~(3 << 16);
-  GPIOC->PUPDR &= ~(3 << 18);
+  // Set PC6 and PC7 to no pull-up, no pull-down
+  GPIOC->PUPDR &= ~(3 << 12);
+  GPIOC->PUPDR &= ~(3 << 14);
 
   // Target Frequency = Clock Frequency / PSC * ARR
   // Target Frequency = 800Hz
   // Clock Frequency = 8MHz
 
-  // 800Hz = 8MHz / PSC * ARR
-  // PSC = 7999 a reduce clock frequency from 8MHz to 1kHz (1000Hz)
-  // 800Hz = 1kHz / ARR
-  // ARR = 1kHz / 800Hz = 1250
+  // Set TIM3 PSC to 999 to get 8kHz
+  TIM3->PSC = 999;
 
-  // Set TIM3 PSC to 7999 to get 1kHz
-  TIM3->PSC = 7999;
-
-  // Set TIM3 ARR to 1250 to get 800Hz
-  TIM3->ARR = 1250;
+  // Set TIM3 ARR to 10 to get 800Hz
+  TIM3->ARR = 10;
 
   // Set CC1S and CC2S to 00 to set the channels as output
   TIM3->CCMR1 &= ~(3 << 0);
   TIM3->CCMR1 &= ~(3 << 8);
 
-  // Set OC1M to 111 to set the output to PWM mode 2
+  // Set OC1M to 111 to set to PWM mode 2
   TIM3->CCMR1 |= (7 << 4);
-  // Set OC2M to 110 to set the output to PWM mode 1
+  // Set OC2M to 110 to set to PWM mode 1
   TIM3->CCMR1 |= (6 << 12);
 
   // Set OC1PE and OC2PE to 1 to enable preload
@@ -120,13 +112,26 @@ int main(void)
   TIM3->CCMR1 |= (1 << 11);
 
   // Set the output enable bits for channel 1 and 2 in the CCER register
-  TIM3->CCER |= (1 << 0);
-  TIM3->CCER |= (1 << 4);
+  TIM3->CCER |= TIM_CCER_CC1E;
+  TIM3->CCER |= TIM_CCER_CC2E;
 
   // Set the capture/compare registers (CCRx) for both channels to 20% of ARR value.
-  TIM3->CCR1 = 250;
-  TIM3->CCR2 = 250;
-  
+  TIM3->CCR1 = 2;
+  TIM3->CCR2 = 2;
+
+  // Set PC6 and PC7 to AF0 to use TIM3 for PWM output
+  GPIOC->AFR[0] &= ~(0xF << 24); // Clear AFRL6
+  GPIOC->AFR[0] |= (0 << 24); // Set AFRL6 to AF0
+  GPIOC->AFR[0] &= ~(0xF << 28); // Clear AFRL7
+  GPIOC->AFR[0] |= (0 << 28); // Set AFRL7 to AF0
+
+  // Enable the counter
+  TIM3->CR1 |= TIM_CR1_CEN;
+
+  while(1) {
+
+  }
+
 }
 
 /** System Clock Configuration
