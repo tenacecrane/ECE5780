@@ -66,10 +66,68 @@ void SystemClock_Config(void);
 
 /* USER CODE END 0 */
 
+// Configure the timer to generate an interrupt on the UEV event
+void TIM2_IRQHandler(void)
+{
+  // Clear the interrupt pending bit for TIM2
+  TIM2->SR &= ~TIM_SR_UIF;
+
+  // Toggle PC8 and PC9
+  GPIOC->ODR ^= (1 << 8);
+  GPIOC->ODR ^= (1 << 9);
+}
+
 int main(void)
 {
   SystemClock_Config();
 
+  // Enable TIM2, TIM3, PC8 (Green LED), PC9 (Orange LED)
+  RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+  RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
+  RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
+
+  // Set PC8 and PC9 to output
+  GPIOC->MODER |= (1 << 16);
+  GPIOC->MODER |= (1 << 18);
+
+  // Set PC8 and PC9 to push-pull
+  GPIOC->OTYPER &= ~(1 << 8);
+  GPIOC->OTYPER &= ~(1 << 9);
+
+  // Set PC8 and PC9 to low speed
+  GPIOC->OSPEEDR &= ~(0 << 16);
+  GPIOC->OSPEEDR &= ~(0 << 18);
+
+  // Set PC8 and PC9 to no pull-up, no pull-down
+  GPIOC->PUPDR &= ~(3 << 16);
+  GPIOC->PUPDR &= ~(3 << 18);
+
+  // Target Frequency = Clock Frequency / PSC * ARR
+  // Target Frequency = 4Hz
+  // Clock Frequency = 8MHz
+
+  // 4Hz = 8MHz / PSC * ARR
+  // PSC = 7999 a reduce clock frequency from 8MHz to 1kHz (1000Hz)
+  // 4Hz = 1kHz / ARR
+  // ARR = 1kHz / 4Hz = 250
+
+  // Set TIM2 PSC to 7999 to get 1kHz
+  TIM2->PSC = 7999;
+
+  // Set TIM2 ARR to 250 to get 4Hz
+  TIM2->ARR = 250;
+
+  // Configure the timer to generate an interrupt on the UEV event
+  TIM2->DIER |= TIM_DIER_UIE;
+
+  // Enable the timer
+  TIM2->CR1 |= TIM_CR1_CEN;
+
+  // Enable the TIM2 interrupt in the NVIC
+  NVIC_EnableIRQ(TIM2_IRQn);
+
+  // Set PC8 to high
+  GPIOC->BSRR |= (1 << 8);
 }
 
 /** System Clock Configuration
