@@ -66,17 +66,6 @@ void SystemClock_Config(void);
 
 /* USER CODE END 0 */
 
-// Configure the timer to generate an interrupt on the UEV event
-void TIM2_IRQHandler(void)
-{
-  // Clear the interrupt pending bit for TIM2
-  TIM2->SR &= ~TIM_SR_UIF;
-
-  // Toggle PC8 and PC9
-  GPIOC->ODR ^= (1 << 8);
-  GPIOC->ODR ^= (1 << 9);
-}
-
 int main(void)
 {
   SystemClock_Config();
@@ -103,31 +92,41 @@ int main(void)
   GPIOC->PUPDR &= ~(3 << 18);
 
   // Target Frequency = Clock Frequency / PSC * ARR
-  // Target Frequency = 4Hz
+  // Target Frequency = 800Hz
   // Clock Frequency = 8MHz
 
-  // 4Hz = 8MHz / PSC * ARR
+  // 800Hz = 8MHz / PSC * ARR
   // PSC = 7999 a reduce clock frequency from 8MHz to 1kHz (1000Hz)
-  // 4Hz = 1kHz / ARR
-  // ARR = 1kHz / 4Hz = 250
+  // 800Hz = 1kHz / ARR
+  // ARR = 1kHz / 800Hz = 1250
 
-  // Set TIM2 PSC to 7999 to get 1kHz
-  TIM2->PSC = 7999;
+  // Set TIM3 PSC to 7999 to get 1kHz
+  TIM3->PSC = 7999;
 
-  // Set TIM2 ARR to 250 to get 4Hz
-  TIM2->ARR = 250;
+  // Set TIM3 ARR to 1250 to get 800Hz
+  TIM3->ARR = 1250;
 
-  // Configure the timer to generate an interrupt on the UEV event
-  TIM2->DIER |= TIM_DIER_UIE;
+  // Set CC1S and CC2S to 00 to set the channels as output
+  TIM3->CCMR1 &= ~(3 << 0);
+  TIM3->CCMR1 &= ~(3 << 8);
 
-  // Enable the timer
-  TIM2->CR1 |= TIM_CR1_CEN;
+  // Set OC1M to 111 to set the output to PWM mode 2
+  TIM3->CCMR1 |= (7 << 4);
+  // Set OC2M to 110 to set the output to PWM mode 1
+  TIM3->CCMR1 |= (6 << 12);
 
-  // Enable the TIM2 interrupt in the NVIC
-  NVIC_EnableIRQ(TIM2_IRQn);
+  // Set OC1PE and OC2PE to 1 to enable preload
+  TIM3->CCMR1 |= (1 << 3);
+  TIM3->CCMR1 |= (1 << 11);
 
-  // Set PC8 to high
-  GPIOC->BSRR |= (1 << 8);
+  // Set the output enable bits for channel 1 and 2 in the CCER register
+  TIM3->CCER |= (1 << 0);
+  TIM3->CCER |= (1 << 4);
+
+  // Set the capture/compare registers (CCRx) for both channels to 20% of ARR value.
+  TIM3->CCR1 = 250;
+  TIM3->CCR2 = 250;
+  
 }
 
 /** System Clock Configuration
