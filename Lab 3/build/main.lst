@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
   30:Src/main.c    ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
   31:Src/main.c    ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
   32:Src/main.c    ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 2
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 2
 
 
   33:Src/main.c    ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
   87:Src/main.c    ****   // Set PC6 and PC7 to no pull-up, no pull-down
   88:Src/main.c    ****   GPIOC->PUPDR &= ~(3 << 12);
   89:Src/main.c    ****   GPIOC->PUPDR &= ~(3 << 14);
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 3
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 3
 
 
   90:Src/main.c    **** 
@@ -178,7 +178,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
  144:Src/main.c    **** 
  145:Src/main.c    ****     /**Initializes the CPU, AHB and APB busses clocks
  146:Src/main.c    ****     */
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 4
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 4
 
 
  147:Src/main.c    ****   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
@@ -238,7 +238,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
  193:Src/main.c    ****   /* User can add his own implementation to report the HAL error return state */
  194:Src/main.c    ****   while(1)
   35              		.loc 1 194 3 view .LVU1
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 5
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 5
 
 
  195:Src/main.c    ****   {
@@ -298,7 +298,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
   78              		.loc 1 149 41 is_stmt 0 view .LVU12
   79 000c 0F33     		adds	r3, r3, #15
   80 000e 0993     		str	r3, [sp, #36]
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 6
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 6
 
 
  150:Src/main.c    ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -358,7 +358,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
  117              		.loc 1 171 22 is_stmt 0 view .LVU30
  118 0036 FFF7FEFF 		bl	HAL_RCC_GetHCLKFreq
  119              	.LVL3:
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 7
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 7
 
 
  171:Src/main.c    **** 
@@ -418,7 +418,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
   70:Src/main.c    ****   SystemClock_Config();
  170              		.loc 1 70 1 view -0
  171              		.cfi_startproc
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 8
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 8
 
 
  172              		@ Volatile: function does not return.
@@ -478,7 +478,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
  213 0026 8022     		movs	r2, #128
  214 0028 9201     		lsls	r2, r2, #6
  215 002a 0243     		orrs	r2, r0
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 9
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 9
 
 
  216 002c 1A60     		str	r2, [r3]
@@ -538,7 +538,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
   89:Src/main.c    **** 
  253              		.loc 1 89 16 view .LVU68
  254 0054 0240     		ands	r2, r0
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 10
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 10
 
 
  255 0056 DA60     		str	r2, [r3, #12]
@@ -598,7 +598,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
  293 0082 9061     		str	r0, [r2, #24]
  111:Src/main.c    ****   TIM3->CCMR1 |= (1 << 11);
  294              		.loc 1 111 3 is_stmt 1 view .LVU85
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 11
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 11
 
 
  111:Src/main.c    ****   TIM3->CCMR1 |= (1 << 11);
@@ -658,7 +658,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
  123:Src/main.c    ****   GPIOC->AFR[0] |= (0 << 24); // Set AFRL6 to AF0
  332              		.loc 1 123 17 view .LVU103
  333 00ac 0E48     		ldr	r0, .L12+28
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 12
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 12
 
 
  334 00ae 0140     		ands	r1, r0
@@ -718,7 +718,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
  373 00e4 FFFCFFFF 		.word	-769
  374 00e8 FFFFFFF0 		.word	-251658241
  375              		.cfi_endproc
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 13
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 13
 
 
  376              	.LFE40:
@@ -730,20 +730,20 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 1
  383              		.file 5 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
  384              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h"
  385              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_cortex.h"
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s 			page 14
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s:19     .text._Error_Handler:00000000 $t
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s:25     .text._Error_Handler:00000000 _Error_Handler
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s:43     .rodata.SystemClock_Config.str1.4:00000000 $d
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s:48     .text.SystemClock_Config:00000000 $t
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s:54     .text.SystemClock_Config:00000000 SystemClock_Config
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s:157    .text.SystemClock_Config:0000006c $d
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s:162    .text.main:00000000 $t
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s:168    .text.main:00000000 main
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cccrc6Fb.s:367    .text.main:000000cc $d
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s:19     .text._Error_Handler:00000000 $t
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s:25     .text._Error_Handler:00000000 _Error_Handler
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s:43     .rodata.SystemClock_Config.str1.4:00000000 $d
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s:48     .text.SystemClock_Config:00000000 $t
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s:54     .text.SystemClock_Config:00000000 SystemClock_Config
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s:157    .text.SystemClock_Config:0000006c $d
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s:162    .text.main:00000000 $t
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s:168    .text.main:00000000 main
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccmoAKHk.s:367    .text.main:000000cc $d
 
 UNDEFINED SYMBOLS
 __aeabi_uidiv
