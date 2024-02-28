@@ -65,10 +65,59 @@ void SystemClock_Config(void);
 
 /* USER CODE END 0 */
 
+void send_char(char c)
+{
+  // Use an empty while loop which exits once the flag is set.
+  while (!(USART3->ISR & USART_ISR_TXE))
+  {
+  };
+  // Write the character into the transmit data register
+  USART3->TDR = c;
+}
+
+// Loop through an array of characters, send each one, exit when the null character is reached.
+void transmit_string(char str[])
+{
+  for (int i = 0; str[i] != '\0'; i++)
+  {
+    send_char(str[i]);
+  }
+}
+
 int main(void)
 {
   SystemClock_Config();
 
+  // Enable GPIOB clock
+  RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
+
+  // Set PB10 and PB11 to alternate function mode.
+  GPIOB->MODER &= ~(3 << 20);
+  GPIOB->MODER |= 2 << 20;
+  GPIOB->MODER &= ~(3 << 22);
+  GPIOB->MODER |= 2 << 22;
+
+  // Set PB10 and PB11 in AFRH AF4 mode (PB10 -> TX, PB11 -> RX) (USART3)
+  GPIOB->AFR[1] &= ~(0xF << 8);
+  GPIOB->AFR[1] |= 4 << 8;
+  GPIOB->AFR[1] &= ~(0xF << 12);
+  GPIOB->AFR[1] |= 4 << 12;
+
+  // Enable USART3 clock
+  RCC->APB1ENR |= RCC_APB1ENR_USART3EN;
+  // Set baud rate to 115200 bits/s
+  USART3->BRR = HAL_RCC_GetHCLKFreq() / 115200;
+  // Enable transmission and reception
+  USART3->CR1 |= USART_CR1_TE | USART_CR1_RE;
+  // Enable USART3
+  USART3->CR1 |= USART_CR1_UE;
+
+  while(1)
+  {
+    transmit_string("Hello, World!\n");
+    HAL_Delay(1000);
+  }
+  
 }
 
 /** System Clock Configuration
