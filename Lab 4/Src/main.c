@@ -90,6 +90,10 @@ int main(void)
 
   // Enable GPIOB clock
   RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
+  // Enable USART3 clock
+  RCC->APB1ENR |= RCC_APB1ENR_USART3EN;
+  // Enable GPIOC clock
+  RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
 
   // Set PB10 and PB11 to alternate function mode.
   GPIOB->MODER &= ~(3 << 20);
@@ -103,8 +107,40 @@ int main(void)
   GPIOB->AFR[1] &= ~(0xF << 12);
   GPIOB->AFR[1] |= 4 << 12;
 
-  // Enable USART3 clock
-  RCC->APB1ENR |= RCC_APB1ENR_USART3EN;
+  // Enable the red PC6, PC7, PC8, and PC9 to general purpose output mode
+  GPIOC->MODER &= ~(3 << 12);
+  GPIOC->MODER |= 1 << 12;
+  GPIOC->MODER &= ~(3 << 14);
+  GPIOC->MODER |= 1 << 14;  
+  GPIOC->MODER &= ~(3 << 16);
+  GPIOC->MODER |= 1 << 16;
+  GPIOC->MODER &= ~(3 << 18);
+  GPIOC->MODER |= 1 << 18;
+
+  // Set PC6, PC7, PC8, and PC9 to push-pull
+  GPIOC->OTYPER &= ~(1 << 6);
+  GPIOC->OTYPER &= ~(1 << 7);
+  GPIOC->OTYPER &= ~(1 << 8);
+  GPIOC->OTYPER &= ~(1 << 9);
+
+  // Set PC6, PC7, PC8, and PC9 to low speed
+  GPIOC->OSPEEDR &= ~(3 << 12);
+  GPIOC->OSPEEDR &= ~(3 << 14);
+  GPIOC->OSPEEDR &= ~(3 << 16);
+  GPIOC->OSPEEDR &= ~(3 << 18);
+
+  // Set PC6, PC7, PC8, and PC9 to no pull-up, no pull-down
+  GPIOC->PUPDR &= ~(3 << 12);
+  GPIOC->PUPDR &= ~(3 << 14);
+  GPIOC->PUPDR &= ~(3 << 16);
+  GPIOC->PUPDR &= ~(3 << 18);
+
+  // Set PC6 (red), PC7 (blue), PC8 (orange), and PC9 (green) to high
+  GPIOC->ODR |= (1 << 6);
+  GPIOC->ODR |= (1 << 7);
+  GPIOC->ODR |= (1 << 8);
+  GPIOC->ODR |= (1 << 9);
+
   // Set baud rate to 115200 bits/s
   USART3->BRR = HAL_RCC_GetHCLKFreq() / 115200;
   // Enable transmission and reception
@@ -114,8 +150,36 @@ int main(void)
 
   while(1)
   {
-    transmit_string("Hello, World!\n");
-    HAL_Delay(1000);
+    // Toggle LED's based on the character being pressed on the keyboard
+    // If the character is 'r', toggle the red LED (PC6)
+    // If the character is 'b', toggle the blue LED (PC7)
+    // If the character is 'o', toggle the orange LED (PC8)
+    // If the character is 'g', toggle the green LED (PC9)
+
+    // Check and wait on the USART status flag that indicates the receive (read) register is not empty
+    while (!((USART3->ISR >> 5) & 1))
+    {
+    };
+
+    switch(USART3->RDR)
+    {
+      case 'r':
+        GPIOC->ODR ^= (1 << 6);
+        break;
+      case 'b':
+        GPIOC->ODR ^= (1 << 7);
+        break;
+      case 'o':
+        GPIOC->ODR ^= (1 << 8);
+        break;
+      case 'g':
+        GPIOC->ODR ^= (1 << 9);
+        break;
+      default:
+        transmit_string("Invalid character\n");
+        break;
+    }
+
   }
   
 }
