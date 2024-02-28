@@ -73,6 +73,7 @@ void send_char(char c)
   };
   // Write the character into the transmit data register
   USART3->TDR = c;
+  return;
 }
 
 // Loop through an array of characters, send each one, exit when the null character is reached.
@@ -82,6 +83,7 @@ void transmit_string(char str[])
   {
     send_char(str[i]);
   }
+  return;
 }
 
 int main(void)
@@ -90,8 +92,7 @@ int main(void)
 
   // Enable GPIOB clock
   RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
-  // Enable USART3 clock
-  RCC->APB1ENR |= RCC_APB1ENR_USART3EN;
+
   // Enable GPIOC clock
   RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
 
@@ -141,6 +142,8 @@ int main(void)
   GPIOC->ODR |= (1 << 8);
   GPIOC->ODR |= (1 << 9);
 
+  // Enable USART3 clock
+  RCC->APB1ENR |= RCC_APB1ENR_USART3EN;
   // Set baud rate to 115200 bits/s
   USART3->BRR = HAL_RCC_GetHCLKFreq() / 115200;
   // Enable transmission and reception
@@ -156,11 +159,11 @@ int main(void)
     // If the character is 'o', toggle the orange LED (PC8)
     // If the character is 'g', toggle the green LED (PC9)
 
-    // Check and wait on the USART status flag that indicates the receive (read) register is not empty
-    while (!((USART3->ISR >> 5) & 1))
+    // Wait until char has been received
+    while(!(USART3->ISR & USART_ISR_RXNE))
     {
-    };
-
+    } 
+    
     switch(USART3->RDR)
     {
       case 'r':
