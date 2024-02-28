@@ -1,46 +1,46 @@
 /**
-  *
-  ******************************************************************************
-  * File Name          : main.c
-  * Description        : Main program body
-  ******************************************************************************
-  ** This notice applies to any and all portions of this file
-  * that are not between comment pairs USER CODE BEGIN and
-  * USER CODE END. Other portions of this file, whether
-  * inserted by the user or by software development tools
-  * are owned by their respective copyright owners.
-  *
-  * COPYRIGHT(c) 2018 STMicroelectronics
-  *
-  * Redistribution and use in source and binary forms, with or without modification,
-  * are permitted provided that the following conditions are met:
-  *   1. Redistributions of source code must retain the above copyright notice,
-  *      this list of conditions and the following disclaimer.
-  *   2. Redistributions in binary form must reproduce the above copyright notice,
-  *      this list of conditions and the following disclaimer in the documentation
-  *      and/or other materials provided with the distribution.
-  *   3. Neither the name of STMicroelectronics nor the names of its contributors
-  *      may be used to endorse or promote products derived from this software
-  *      without specific prior written permission.
-  *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  *
-  ******************************************************************************
-  */
+ *
+ ******************************************************************************
+ * File Name          : main.c
+ * Description        : Main program body
+ ******************************************************************************
+ ** This notice applies to any and all portions of this file
+ * that are not between comment pairs USER CODE BEGIN and
+ * USER CODE END. Other portions of this file, whether
+ * inserted by the user or by software development tools
+ * are owned by their respective copyright owners.
+ *
+ * COPYRIGHT(c) 2018 STMicroelectronics
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *   1. Redistributions of source code must retain the above copyright notice,
+ *      this list of conditions and the following disclaimer.
+ *   2. Redistributions in binary form must reproduce the above copyright notice,
+ *      this list of conditions and the following disclaimer in the documentation
+ *      and/or other materials provided with the distribution.
+ *   3. Neither the name of STMicroelectronics nor the names of its contributors
+ *      may be used to endorse or promote products derived from this software
+ *      without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ ******************************************************************************
+ */
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f0xx_hal.h"
-void _Error_Handler(char * file, int line);
+void _Error_Handler(char *file, int line);
 
 /* USER CODE BEGIN Includes */
 
@@ -65,6 +65,9 @@ void SystemClock_Config(void);
 
 /* USER CODE END 0 */
 
+int charCounter = 0;
+char ledColor;
+
 void send_char(char c)
 {
   // Use an empty while loop which exits once the flag is set.
@@ -83,6 +86,86 @@ void transmit_string(char str[])
   {
     send_char(str[i]);
   }
+  return;
+}
+
+// Blank USART3 interrupt handler
+void USART3_4_IRQHandler(void)
+{
+  // Check if the interrupt was triggered by a received character
+  if (USART3->ISR & USART_ISR_RXNE)
+  {
+    char c = USART3->RDR;
+    transmit_string("LED?");
+    if (charCounter == 0)
+      switch (c)
+      {
+      case 'r':
+        charCounter++;
+        ledColor = 'r';
+        break;
+      case 'b':
+        charCounter++;
+        ledColor = 'b';
+        break;
+      case 'o':
+        charCounter++;
+        ledColor = 'o';
+        break;
+      case 'g':
+        charCounter++;
+        ledColor = 'g';
+        break;
+      default:
+        transmit_string("Invalid character\n");
+      }
+    else
+    {
+      transmit_string("CMD?");
+      charCounter = 0;
+      switch (c)
+      {
+      // Turn off the LED
+      case '0':
+        if (ledColor == 'r')
+          GPIOC->ODR &= ~(1 << 6);
+        else if (ledColor == 'b')
+          GPIOC->ODR &= ~(1 << 7);
+        else if (ledColor == 'o')
+          GPIOC->ODR &= ~(1 << 8);
+        else if (ledColor == 'g')
+          GPIOC->ODR &= ~(1 << 9);
+        break;
+      // Turn on the LED
+      case '1':
+        if (ledColor == 'r')
+          GPIOC->ODR |= (1 << 6);
+        else if (ledColor == 'b')
+          GPIOC->ODR |= (1 << 7);
+        else if (ledColor == 'o')
+          GPIOC->ODR |= (1 << 8);
+        else if (ledColor == 'g')
+          GPIOC->ODR |= (1 << 9);
+        break;
+      // Toggle the LED
+      case '2':
+        if (ledColor == 'r')
+          GPIOC->ODR ^= (1 << 6);
+        else if (ledColor == 'b')
+          GPIOC->ODR ^= (1 << 7);
+        else if (ledColor == 'o')
+          GPIOC->ODR ^= (1 << 8);
+        else if (ledColor == 'g')
+          GPIOC->ODR ^= (1 << 9);
+        break;
+      default:
+        transmit_string("Invalid character\n");
+      }
+      ledColor = ' ';
+    }
+  }
+
+
   return;
 }
 
@@ -112,7 +195,7 @@ int main(void)
   GPIOC->MODER &= ~(3 << 12);
   GPIOC->MODER |= 1 << 12;
   GPIOC->MODER &= ~(3 << 14);
-  GPIOC->MODER |= 1 << 14;  
+  GPIOC->MODER |= 1 << 14;
   GPIOC->MODER &= ~(3 << 16);
   GPIOC->MODER |= 1 << 16;
   GPIOC->MODER &= ~(3 << 18);
@@ -151,52 +234,31 @@ int main(void)
   // Enable USART3
   USART3->CR1 |= USART_CR1_UE;
 
-  while(1)
+  // Enable the RXNE interrupt
+  USART3->CR1 |= USART_CR1_RXNEIE;
+
+  // Enable the USART3 interrupt
+  NVIC_EnableIRQ(USART3_4_IRQn);
+  NVIC_SetPriority(USART3_4_IRQn, 0);
+
+  // Send the initial message
+  transmit_string("LED?");
+
+  while (1)
   {
-    // Toggle LED's based on the character being pressed on the keyboard
-    // If the character is 'r', toggle the red LED (PC6)
-    // If the character is 'b', toggle the blue LED (PC7)
-    // If the character is 'o', toggle the orange LED (PC8)
-    // If the character is 'g', toggle the green LED (PC9)
-
-    // Wait until char has been received
-    while(!(USART3->ISR & USART_ISR_RXNE))
-    {
-    } 
-    
-    switch(USART3->RDR)
-    {
-      case 'r':
-        GPIOC->ODR ^= (1 << 6);
-        break;
-      case 'b':
-        GPIOC->ODR ^= (1 << 7);
-        break;
-      case 'o':
-        GPIOC->ODR ^= (1 << 8);
-        break;
-      case 'g':
-        GPIOC->ODR ^= (1 << 9);
-        break;
-      default:
-        transmit_string("Invalid character\n");
-        break;
-    }
-
   }
-  
 }
 
 /** System Clock Configuration
-*/
+ */
 void SystemClock_Config(void)
 {
 
   RCC_OscInitTypeDef RCC_OscInitStruct;
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
 
-    /**Initializes the CPU, AHB and APB busses clocks
-    */
+  /**Initializes the CPU, AHB and APB busses clocks
+   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = 16;
@@ -206,10 +268,9 @@ void SystemClock_Config(void)
     _Error_Handler(__FILE__, __LINE__);
   }
 
-    /**Initializes the CPU, AHB and APB busses clocks
-    */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1;
+  /**Initializes the CPU, AHB and APB busses clocks
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
@@ -219,12 +280,12 @@ void SystemClock_Config(void)
     _Error_Handler(__FILE__, __LINE__);
   }
 
-    /**Configure the Systick interrupt time
-    */
-  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
+  /**Configure the Systick interrupt time
+   */
+  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq() / 1000);
 
-    /**Configure the Systick
-    */
+  /**Configure the Systick
+   */
   HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
 
   /* SysTick_IRQn interrupt configuration */
@@ -236,15 +297,15 @@ void SystemClock_Config(void)
 /* USER CODE END 4 */
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @param  None
-  * @retval None
-  */
-void _Error_Handler(char * file, int line)
+ * @brief  This function is executed in case of error occurrence.
+ * @param  None
+ * @retval None
+ */
+void _Error_Handler(char *file, int line)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  while(1)
+  while (1)
   {
   }
   /* USER CODE END Error_Handler_Debug */
@@ -253,29 +314,28 @@ void _Error_Handler(char * file, int line)
 #ifdef USE_FULL_ASSERT
 
 /**
-   * @brief Reports the name of the source file and the source line number
-   * where the assert_param error has occurred.
-   * @param file: pointer to the source file name
-   * @param line: assert_param error line source number
-   * @retval None
-   */
-void assert_failed(uint8_t* file, uint32_t line)
+ * @brief Reports the name of the source file and the source line number
+ * where the assert_param error has occurred.
+ * @param file: pointer to the source file name
+ * @param line: assert_param error line source number
+ * @retval None
+ */
+void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
-
 }
 
 #endif
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-*/
+ * @}
+ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
