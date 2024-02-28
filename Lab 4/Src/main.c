@@ -103,6 +103,18 @@ int main(void)
   GPIOB->AFR[1] &= ~(0xF << 12);
   GPIOB->AFR[1] |= 4 << 12;
 
+  // Enable the red PC8 and PC9
+  RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
+  // Set PC8 and PC9 to output mode
+  GPIOC->MODER &= ~(3 << 16);
+  GPIOC->MODER |= 1 << 16;
+  GPIOC->MODER &= ~(3 << 18);
+  GPIOC->MODER |= 1 << 18;
+
+  // Set PC8 (orange) and PC9 (green) to high 
+  GPIOC->ODR |= (1 << 8);
+  GPIOC->ODR |= (1 << 9);
+
   // Enable USART3 clock
   RCC->APB1ENR |= RCC_APB1ENR_USART3EN;
   // Set baud rate to 115200 bits/s
@@ -114,8 +126,32 @@ int main(void)
 
   while(1)
   {
-    transmit_string("Hello, World!\n");
-    HAL_Delay(1000);
+    // Toggle LED's based on the character being pressed on the keyboard
+    // If the character is 'o', toggle the orange LED (PC8)
+    // If the character is 'g', toggle the green LED (PC9)
+
+    // Check and wait on the USART status flag that indicates the receive (read) register is not empty
+    while (!(USART3->ISR & USART_ISR_RXNE))
+    {
+    };
+
+    // Test the received data and toggle the appropriate LED
+    char c = USART3->RDR;
+    send_char(c);
+    if (c == 'o')
+    {
+      GPIOC->ODR ^= (1 << 8);
+    }
+    else if (c == 'g')
+    {
+      GPIOC->ODR ^= (1 << 9);
+    }
+    else{
+      // Print an error message if the character is not 'o' or 'g'
+      char error[] = "Error: Invalid character\n";
+      transmit_string(error);
+    }
+
   }
   
 }
