@@ -40,6 +40,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f0xx_hal.h"
+#include "stdlib.h"
+
 void _Error_Handler(char *file, int line);
 
 /* USER CODE BEGIN Includes */
@@ -64,6 +66,76 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
+
+uint8_t read_i2c()
+{
+  // Reset CR2
+  // Set CR2 to 0
+  I2C2->CR2 = 0;
+
+  // Set I2C2_CR2 SADD to 0011010010 (0x69) (slave address set)
+  I2C2->CR2 |= (1 << 16) | (0x69 << 1);
+
+  // Set the RD_WRN bit to 1 (read)
+  I2C2->CR2 |= I2C_CR2_RD_WRN;
+
+  // Set the START bit
+  I2C2->CR2 |= (1 << 13);
+
+  while (1)
+  {
+    // If NACKF flag is set
+    if (I2C2->ISR & (1 << 4))
+    {
+      // Slave did not respond to the address frame
+      // Just continue
+      break;
+    }
+    // If RXNE flag is set
+    else if (I2C2->ISR & (1 << 2))
+    {
+      break;
+    }
+  }
+  // Check for the RXNE flag
+  while (!(I2C2->ISR & (1 << 6)))
+    ;
+  return I2C2->RXDR;
+}
+
+void write_i2c(uint32_t reg)
+{
+  // Reset CR2
+  // Set CR2 to 0
+  I2C2->CR2 = 0;
+
+  // Send one byte of data to the Gryoscope
+  I2C2->CR2 |= (1 << 16) | (0x69 << 1);
+
+  // Set RD_WRN to WRN
+  I2C2->CR2 &= ~I2C_CR2_RD_WRN;
+
+  // Set the START bit
+  I2C2->CR2 |= (1 << 13);
+  while (1)
+  {
+    if ((I2C2->ISR & (1 << 1)))
+    {
+      // Slave did not respond to the address frame
+      // Just continue
+      break;
+    }
+    // Check for NACKF flag
+    else if ((I2C2->ISR & (1 << 4)))
+    {
+      // Wiring or configuration error
+    }
+  }
+  I2C2->TXDR = reg;
+  // Wait for the TC flag to be set
+  while (!(I2C2->ISR & (1 << 6)))
+    ;
+}
 
 int main(void)
 {
@@ -134,10 +206,13 @@ int main(void)
   I2C2->CR1 |= I2C_CR1_PE;
 
   // Set PC6 (red) to high to signal I2C start
-  GPIOC->ODR |= (1 << 6);
+  // Disable this for part 2
+  // GPIOC->ODR |= (1 << 6);
 
-  // Set I2C2_CR2 SADD to 0x69 (slave address set)
-  I2C2->CR2 |= (1 << 16) | (0x69 << 1);
+  // Set I2C2_CR2 SADD to 0x69 (slave address set).
+  // For part 1, (1 << 16) | (0x69 << 1)
+  // For part 2, (2 << 16) | (0x69 << 1)
+  I2C2->CR2 |= (2 << 16) | (0x69 << 1);
 
   // Set RD_WRN to WRN
   I2C2->CR2 &= ~I2C_CR2_RD_WRN;
@@ -145,69 +220,177 @@ int main(void)
   // Set the START bit
   I2C2->CR2 |= (1 << 13);
 
+  // For Part 1
+  // while (1)
+  // { // Check for TXIS flag (bit 1)
+  //   if ((I2C2->ISR & (1 << 1)))
+  //   {
+  //     // Slave did not respond to the address frame
+  //     // Just continue
+  //     // Set PC6 (red) to low to signal I2C stop
+  //     GPIOC->ODR &= ~(1 << 6);
+  //     break;
+  //   }
+  //   // Check for NACKF flag
+  //   else if ((I2C2->ISR & (1 << 4)))
+  //   {
+
+  //     // Wiring or configuration error
+  //   }
+  // }
+  // // Send the WHO_AM_I register address
+  // I2C2->TXDR = 0x0F;
+
+  // // Wait for the TC flag to be set
+  // while (!(I2C2->ISR & (1 << 6)))
+  //   ;
+
+  // // Reset CR2
+  // // Set CR2 to 0
+  // I2C2->CR2 = 0;
+
+  // // Set I2C2_CR2 SADD to 0011010010 (0x69) (slave address set)
+  // I2C2->CR2 |= (1 << 16) | (0x69 << 1);
+
+  // // Set the RD_WRN bit to 1 (read)
+  // I2C2->CR2 |= I2C_CR2_RD_WRN;
+
+  // // Set the START bit
+  // I2C2->CR2 |= (1 << 13);
+
+  // // Wait until the RXNE or NACKF flag is set
+  // while (1)
+  // {
+  //   // If NACKF flag is set
+  //   if (I2C2->ISR & (1 << 4))
+  //   {
+  //     // Slave did not respond to the address frame
+  //     // Just continue
+  //     // Set PC6 (red) to low to signal I2C stop
+  //     GPIOC->ODR &= ~(1 << 6);
+  //   }
+  //   // If RXNE flag is set
+  //   else if (I2C2->ISR & (1 << 2))
+  //   {
+  //     break;
+  //   }
+  // }
+  // // Set PC7 to high to confirm that the WHO_AM_I register is being read correctly
+  // if (I2C2->RXDR == 0xD3)
+  // {
+  //   GPIOC->ODR |= (1 << 7);
+  //   // Send the stop bit
+  //   I2C2->CR2 |= (1 << 14);
+  // }
+  // while (1);
+
+  // For Part 2
+  // Steps:
+  // 1.) Enable gyro by writing information to the Gryoscope
+  // 2.) Send 2 bytes of data to the Gryoscope
+  // 3.) Read 6 bytes of data from the Gryoscope
+  // Enable the X and Y sensing axes in the CTRL_REG1 register
+
   while (1)
-  { // Check for TXIS flag (bit 1)
+  {
     if ((I2C2->ISR & (1 << 1)))
     {
       // Slave did not respond to the address frame
       // Just continue
-      // Set PC6 (red) to low to signal I2C stop
-      GPIOC->ODR &= ~(1 << 6);
       break;
     }
     // Check for NACKF flag
     else if ((I2C2->ISR & (1 << 4)))
     {
-
       // Wiring or configuration error
     }
   }
-  // Send the WHO_AM_I register address
-  I2C2->TXDR = 0x0F;
+
+  I2C2->TXDR = 0x20;
+
+  while (1)
+  {
+    if ((I2C2->ISR & (1 << 1)))
+    {
+      // Slave did not respond to the address frame
+      // Just continue
+      break;
+    }
+    // Check for NACKF flag
+    else if ((I2C2->ISR & (1 << 4)))
+    {
+      // Wiring or configuration error
+    }
+  }
+
+  I2C2->TXDR = 0x0B;
 
   // Wait for the TC flag to be set
   while (!(I2C2->ISR & (1 << 6)))
     ;
 
-  // Reset CR2
-  // Set CR2 to 0
-  I2C2->CR2 = 0;
-
-  // Set I2C2_CR2 SADD to 0011010010 (0x69) (slave address set)
-  I2C2->CR2 |= (1 << 16) | (0x69 << 1);
-
-  // Set the RD_WRN bit to 1 (read)
-  I2C2->CR2 |= I2C_CR2_RD_WRN;
-
-  // Set the START bit
-  I2C2->CR2 |= (1 << 13);
-
-  // Wait until the RXNE or NACKF flag is set
+  // We want to store 4 values from the gryoscope
+  uint8_t OUT_X_L, OUT_X_H, OUT_Y_L, OUT_Y_H;
+  // OUT_X_L: 28h, OUT_X_H: 29h
+  // OUT_Y_L: 2Ah, OUT_Y_H: 2Bh
+  // Read the 4 bytes of data from the Gryoscope every 100ms
   while (1)
   {
-    // If NACKF flag is set
-    if (I2C2->ISR & (1 << 4))
+    write_i2c(0x28);
+    OUT_X_L = read_i2c();
+    write_i2c(0x29);
+    OUT_X_H = read_i2c();
+    write_i2c(0x2A);
+    OUT_Y_L = read_i2c();
+    write_i2c(0x2B);
+    OUT_Y_H = read_i2c();
+
+    // Combine the high and low bytes
+    int16_t x = (OUT_X_H << 8) | OUT_X_L;
+    int16_t y = (OUT_Y_H << 8) | OUT_Y_L;
+
+    // Determine minimum value before LED changes
+    uint16_t min = 0xFFF;
+
+    // If x has a higher magnitude than y
+    if (abs(x) > abs(y))
     {
-      // Slave did not respond to the address frame
-      // Just continue
-      // Set PC6 (red) to low to signal I2C stop
-      GPIOC->ODR &= ~(1 << 6);
+      // Check if x is positive or negative
+      if (x > 0 && x > min)
+      {
+        GPIOC->ODR |= (1 << 8);
+        GPIOC->ODR &= ~(1 << 6);
+        GPIOC->ODR &= ~(1 << 7);
+        GPIOC->ODR &= ~(1 << 9);
+      }
+      else if (x < 0 && -x > min)
+      {
+        GPIOC->ODR |= (1 << 9);
+        GPIOC->ODR &= ~(1 << 6);
+        GPIOC->ODR &= ~(1 << 7);
+        GPIOC->ODR &= ~(1 << 8);
+      }
     }
-    // If RXNE flag is set
-    else if (I2C2->ISR & (1 << 2))
+    else if (abs(y) > abs(x))
     {
-      break;
+      // Check if y is positive or negative
+      if (y > 0 && y > min)
+      {
+        GPIOC->ODR |= (1 << 7);
+        GPIOC->ODR &= ~(1 << 6);
+        GPIOC->ODR &= ~(1 << 8);
+        GPIOC->ODR &= ~(1 << 9);
+      }
+      else if (y < 0 && -y > min)
+      {
+        GPIOC->ODR |= (1 << 6);
+        GPIOC->ODR &= ~(1 << 7);
+        GPIOC->ODR &= ~(1 << 8);
+        GPIOC->ODR &= ~(1 << 9);
+      }
     }
+    HAL_Delay(100);
   }
-  // Set PC7 to high to confirm that the WHO_AM_I register is being read correctly
-  if (I2C2->RXDR == 0xD3)
-  {
-    GPIOC->ODR |= (1 << 7);
-    // Send the stop bit
-    I2C2->CR2 |= (1 << 14);
-  }
-  while (1);
-  
 }
 
 /** System Clock Configuration
