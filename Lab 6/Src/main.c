@@ -40,6 +40,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f0xx_hal.h"
+#include <stm32f072xb.h>
 void _Error_Handler(char * file, int line);
 
 /* USER CODE BEGIN Includes */
@@ -68,6 +69,108 @@ void SystemClock_Config(void);
 int main(void)
 {
   SystemClock_Config();
+
+    // Enable GPIOB and GPOIC
+  RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
+
+  // Enable LED's 6-9
+  // Clear the bits for PC6-9
+  GPIOC->MODER &= ~(3 << 12);
+  GPIOC->MODER &= ~(3 << 14);
+  GPIOC->MODER &= ~(3 << 16);
+  GPIOC->MODER &= ~(3 << 18);
+  // Setting PC6-9 to General-Purpose Output Mode
+  GPIOC->MODER |= (1 << 12);
+  GPIOC->MODER |= (1 << 14);
+  GPIOC->MODER |= (1 << 16);
+  GPIOC->MODER |= (1 << 18);
+  // Setting PC6-9 to Push-Pull Output Type
+  GPIOC->OTYPER &= ~(1 << 6);
+  GPIOC->OTYPER &= ~(1 << 7);
+  GPIOC->OTYPER &= ~(1 << 8);
+  GPIOC->OTYPER &= ~(1 << 9);
+  // Set PC6-9 to Low Speed
+  GPIOC->OSPEEDR &= ~(0 << 12);
+  GPIOC->OSPEEDR &= ~(0 << 14);
+  GPIOC->OSPEEDR &= ~(0 << 16);
+  GPIOC->OSPEEDR &= ~(0 << 18);
+  // Set the pull-up/pull-down resistors to no pull-up/pull-down since the bits are 00
+  GPIOC->PUPDR &= ~(3 << 12);
+  GPIOC->PUPDR &= ~(3 << 14);
+  GPIOC->PUPDR &= ~(3 << 16);
+  GPIOC->PUPDR &= ~(3 << 18);
+
+  // Configure PC0 to analog mode, no pull-up/down resistors
+  GPIOC->MODER |= (3 << 0);
+  GPIOC->PUPDR &= ~(3 << 0);
+
+  // Enable the ADC clock
+  RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;
+
+  // Set the ADC to 8-bit
+  ADC1->CFGR1 &= ~(3 << 3);
+  ADC1->CFGR1 |= (2 << 3);
+
+  // Set continuous conversion mode
+  ADC1->CFGR1 |= (1 << 13);
+
+  // Hardware trigger disabled
+  ADC1->CFGR1 &= ~(1 << 0);
+
+  // PC0 is input channel ADC_IN10
+  ADC1->CHSELR |= (1 << 10);
+
+  // Begin the calibration
+  ADC1->ISR |= (1 << 31); // Set the ADRDY bit to 1
+  ADC1->CR |= (1 << 0); // Set the ADEN bit to 1
+
+  // Wait for calibration to finish
+  while ((ADC1->ISR & (1 << 0)) == 0) {
+    // Wait for the ADRDY bit to be 1
+  }
+
+  // Start the ADC
+  ADC1->CR |= (1 << 2);
+
+  while(1){
+    // Read the values of the ADC and turn on and off LEDs based on the value
+    // Using a 100k potentiometer hooked up to PC0, operating in 8-bit mode
+    // gives us a value between 0-255.
+
+    if(ADC1->DR < 64){
+      GPIOC->ODR |= (1 << 6);
+      GPIOC->ODR &= ~(1 << 7);
+      GPIOC->ODR &= ~(1 << 8);
+      GPIOC->ODR &= ~(1 << 9);
+    }
+    else if(ADC1->DR < 128){
+      GPIOC->ODR |= (1 << 6);
+      GPIOC->ODR |= (1 << 7);
+      GPIOC->ODR &= ~(1 << 8);
+      GPIOC->ODR &= ~(1 << 9);
+    }
+    else if(ADC1->DR < 192){
+      GPIOC->ODR |= (1 << 6);
+      GPIOC->ODR |= (1 << 7);
+      GPIOC->ODR |= (1 << 8);
+      GPIOC->ODR &= ~(1 << 9);
+    }
+    else{
+      GPIOC->ODR |= (1 << 6);
+      GPIOC->ODR |= (1 << 7);
+      GPIOC->ODR |= (1 << 8);
+      GPIOC->ODR |= (1 << 9);
+    }
+  }
+
+
+
+
+
+
+
+
+
 
 }
 
