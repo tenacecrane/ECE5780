@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
   30:Src/main.c    ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
   31:Src/main.c    ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
   32:Src/main.c    ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 2
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 2
 
 
   33:Src/main.c    ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
   87:Src/main.c    ****   GPIOC->OTYPER &= ~(1 << 6);
   88:Src/main.c    ****   GPIOC->OTYPER &= ~(1 << 7);
   89:Src/main.c    ****   GPIOC->OTYPER &= ~(1 << 8);
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 3
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 3
 
 
   90:Src/main.c    ****   GPIOC->OTYPER &= ~(1 << 9);
@@ -133,7 +133,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
   99:Src/main.c    ****   GPIOC->PUPDR &= ~(3 << 16);
  100:Src/main.c    ****   GPIOC->PUPDR &= ~(3 << 18);
  101:Src/main.c    **** 
- 102:Src/main.c    ****   // Part 1
+ 102:Src/main.c    ****   // // Part 1
  103:Src/main.c    ****   // // Configure PC0 to analog mode, no pull-up/down resistors
  104:Src/main.c    ****   // GPIOC->MODER |= (3 << 0);
  105:Src/main.c    ****   // GPIOC->PUPDR &= ~(3 << 0);
@@ -178,7 +178,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  144:Src/main.c    ****   //     GPIOC->ODR &= ~(1 << 9);
  145:Src/main.c    ****   //   }
  146:Src/main.c    ****   //   else if(ADC1->DR < 128){
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 4
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 4
 
 
  147:Src/main.c    ****   //     GPIOC->ODR |= (1 << 6);
@@ -216,14 +216,14 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  179:Src/main.c    ****   // Enable the DAC
  180:Src/main.c    ****   DAC->CR |= (1 << 0);
  181:Src/main.c    **** 
- 182:Src/main.c    **** // Square Wave: 8-bit, 32 samples/cycle
- 183:Src/main.c    **** const uint8_t square_table[32] = {254,254,254,254,254,254,254,254,254,254,
- 184:Src/main.c    **** 254,254,254,254,254,254,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+ 182:Src/main.c    **** // Sine Wave: 8-bit, 32 samples/cycle
+ 183:Src/main.c    **** const uint8_t sine_table[32] = {127,151,175,197,216,232,244,251,254,251,244,
+ 184:Src/main.c    **** 232,216,197,175,151,127,102,78,56,37,21,9,2,0,2,9,21,37,56,78,102};
  185:Src/main.c    **** 
- 186:Src/main.c    ****   // Write the sine wave to the DAC
+ 186:Src/main.c    ****   // Write the square wave to the DAC
  187:Src/main.c    ****   while(1){
  188:Src/main.c    ****     for(int i = 0; i < 32; i++){
- 189:Src/main.c    ****       DAC->DHR8R1 = square_table[i];
+ 189:Src/main.c    ****       DAC->DHR8R1 = sine_table[i];
  190:Src/main.c    ****       // Wait 1ms
  191:Src/main.c    ****       HAL_Delay(1);
  192:Src/main.c    ****     }
@@ -238,7 +238,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  201:Src/main.c    **** 
  202:Src/main.c    **** 
  203:Src/main.c    **** 
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 5
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 5
 
 
  204:Src/main.c    **** 
@@ -298,7 +298,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  258:Src/main.c    ****   * @param  None
  259:Src/main.c    ****   * @retval None
  260:Src/main.c    ****   */
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 6
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 6
 
 
  261:Src/main.c    **** void _Error_Handler(char * file, int line)
@@ -358,7 +358,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
   69              		.loc 1 218 3 view .LVU7
  218:Src/main.c    ****   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   70              		.loc 1 218 36 is_stmt 0 view .LVU8
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 7
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 7
 
 
   71 0004 0223     		movs	r3, #2
@@ -418,7 +418,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  107              		.loc 1 235 3 is_stmt 1 view .LVU26
  235:Src/main.c    ****   {
  108              		.loc 1 235 7 is_stmt 0 view .LVU27
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 8
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 8
 
 
  109 002a 0021     		movs	r1, #0
@@ -478,7 +478,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  154              	.L9:
  155              		.align	2
  156              	.L8:
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 9
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 9
 
 
  157 006c 00000000 		.word	.LC0
@@ -538,7 +538,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
   78:Src/main.c    ****   GPIOC->MODER &= ~(3 << 16);
  205              		.loc 1 78 3 is_stmt 1 view .LVU45
   78:Src/main.c    ****   GPIOC->MODER &= ~(3 << 16);
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 10
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 10
 
 
  206              		.loc 1 78 8 is_stmt 0 view .LVU46
@@ -598,7 +598,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
   84:Src/main.c    ****   GPIOC->MODER |= (1 << 18);
  245              		.loc 1 84 16 view .LVU62
  246 004c 8021     		movs	r1, #128
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 11
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 11
 
 
  247 004e 4902     		lsls	r1, r1, #9
@@ -658,7 +658,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
   92:Src/main.c    ****   GPIOC->OSPEEDR &= ~(0 << 14);
  286              		.loc 1 92 3 is_stmt 1 view .LVU78
   92:Src/main.c    ****   GPIOC->OSPEEDR &= ~(0 << 14);
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 12
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 12
 
 
  287              		.loc 1 92 8 is_stmt 0 view .LVU79
@@ -718,7 +718,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  322 009c 2140     		ands	r1, r4
  323 009e D960     		str	r1, [r3, #12]
  100:Src/main.c    **** 
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 13
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 13
 
 
  324              		.loc 1 100 3 is_stmt 1 view .LVU99
@@ -778,7 +778,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  363              		.loc 1 174 3 is_stmt 1 view .LVU114
  174:Src/main.c    **** 
  364              		.loc 1 174 6 is_stmt 0 view .LVU115
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 14
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 14
 
 
  365 00d0 1B4B     		ldr	r3, .L14+36
@@ -808,9 +808,9 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  382 00e4 0121     		movs	r1, #1
  383 00e6 0A43     		orrs	r2, r1
  384 00e8 1A60     		str	r2, [r3]
- 183:Src/main.c    **** 254,254,254,254,254,254,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+ 183:Src/main.c    **** 232,216,197,175,151,127,102,78,56,37,21,9,2,0,2,9,21,37,56,78,102};
  385              		.loc 1 183 1 is_stmt 1 view .LVU123
- 183:Src/main.c    **** 254,254,254,254,254,254,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+ 183:Src/main.c    **** 232,216,197,175,151,127,102,78,56,37,21,9,2,0,2,9,21,37,56,78,102};
  386              		.loc 1 183 15 is_stmt 0 view .LVU124
  387 00ea 6946     		mov	r1, sp
  388 00ec 164A     		ldr	r2, .L14+44
@@ -830,7 +830,7 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  189:Src/main.c    ****       // Wait 1ms
  402              		.loc 1 189 7 is_stmt 1 view .LVU125
  189:Src/main.c    ****       // Wait 1ms
- 403              		.loc 1 189 33 is_stmt 0 view .LVU126
+ 403              		.loc 1 189 31 is_stmt 0 view .LVU126
  404 0102 6B46     		mov	r3, sp
  405 0104 1A5D     		ldrb	r2, [r3, r4]
  189:Src/main.c    ****       // Wait 1ms
@@ -838,38 +838,38 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  407 0106 0E4B     		ldr	r3, .L14+36
  408 0108 1A61     		str	r2, [r3, #16]
  191:Src/main.c    ****     }
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 15
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 15
 
 
  409              		.loc 1 191 7 is_stmt 1 view .LVU128
  410 010a 0120     		movs	r0, #1
  411 010c FFF7FEFF 		bl	HAL_Delay
  412              	.LVL12:
- 188:Src/main.c    ****       DAC->DHR8R1 = square_table[i];
+ 188:Src/main.c    ****       DAC->DHR8R1 = sine_table[i];
  413              		.loc 1 188 29 discriminator 3 view .LVU129
  414 0110 0134     		adds	r4, r4, #1
  415              	.LVL13:
  416              	.L11:
- 188:Src/main.c    ****       DAC->DHR8R1 = square_table[i];
+ 188:Src/main.c    ****       DAC->DHR8R1 = sine_table[i];
  417              		.loc 1 188 22 discriminator 1 view .LVU130
  418 0112 1F2C     		cmp	r4, #31
  419 0114 F5DD     		ble	.L12
  420              	.LVL14:
  421              	.L13:
- 188:Src/main.c    ****       DAC->DHR8R1 = square_table[i];
+ 188:Src/main.c    ****       DAC->DHR8R1 = sine_table[i];
  422              		.loc 1 188 22 is_stmt 0 discriminator 1 view .LVU131
  423              	.LBE2:
  187:Src/main.c    ****     for(int i = 0; i < 32; i++){
  424              		.loc 1 187 3 is_stmt 1 view .LVU132
- 188:Src/main.c    ****       DAC->DHR8R1 = square_table[i];
+ 188:Src/main.c    ****       DAC->DHR8R1 = sine_table[i];
  425              		.loc 1 188 5 view .LVU133
  426              	.LBB3:
- 188:Src/main.c    ****       DAC->DHR8R1 = square_table[i];
+ 188:Src/main.c    ****       DAC->DHR8R1 = sine_table[i];
  427              		.loc 1 188 9 view .LVU134
- 188:Src/main.c    ****       DAC->DHR8R1 = square_table[i];
+ 188:Src/main.c    ****       DAC->DHR8R1 = sine_table[i];
  428              		.loc 1 188 13 is_stmt 0 view .LVU135
  429 0116 0024     		movs	r4, #0
- 188:Src/main.c    ****       DAC->DHR8R1 = square_table[i];
+ 188:Src/main.c    ****       DAC->DHR8R1 = sine_table[i];
  430              		.loc 1 188 5 view .LVU136
  431 0118 FBE7     		b	.L11
  432              	.L15:
@@ -894,19 +894,19 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  452              		.align	2
  453              		.set	.LANCHOR0,. + 0
  454              	.LC2:
- 455 0000 FEFEFEFE 		.ascii	"\376\376\376\376\376\376\376\376\376\376\376\376\376"
- 455      FEFEFEFE 
- 455      FEFEFEFE 
- 455      FE
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 16
+ 455 0000 7F97AFC5 		.ascii	"\177\227\257\305\330\350\364\373\376\373\364\350\330"
+ 455      D8E8F4FB 
+ 455      FEFBF4E8 
+ 455      D8
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 16
 
 
- 456 000d FEFEFE00 		.ascii	"\376\376\376\000\000\000\000\000\000\000\000\000\000"
- 456      00000000 
- 456      00000000 
- 456      00
- 457 001a 00000000 		.ascii	"\000\000\000\000\000\000"
- 457      0000
+ 456 000d C5AF977F 		.ascii	"\305\257\227\177fN8%\025\011\002\000\002\011\025%8N"
+ 456      664E3825 
+ 456      15090200 
+ 456      02091525 
+ 456      384E
+ 457 001f 66       		.ascii	"f"
  458              		.text
  459              	.Letext0:
  460              		.file 2 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h"
@@ -916,21 +916,21 @@ ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 1
  464              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h"
  465              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_cortex.h"
  466              		.file 8 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
-ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s 			page 17
+ARM GAS  /var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s 			page 17
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s:19     .text._Error_Handler:00000000 $t
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s:25     .text._Error_Handler:00000000 _Error_Handler
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s:43     .rodata.SystemClock_Config.str1.4:00000000 $d
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s:48     .text.SystemClock_Config:00000000 $t
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s:54     .text.SystemClock_Config:00000000 SystemClock_Config
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s:157    .text.SystemClock_Config:0000006c $d
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s:162    .text.main:00000000 $t
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s:168    .text.main:00000000 main
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s:435    .text.main:0000011c $d
-/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//ccRiWdHW.s:452    .rodata:00000000 $d
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s:19     .text._Error_Handler:00000000 $t
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s:25     .text._Error_Handler:00000000 _Error_Handler
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s:43     .rodata.SystemClock_Config.str1.4:00000000 $d
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s:48     .text.SystemClock_Config:00000000 $t
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s:54     .text.SystemClock_Config:00000000 SystemClock_Config
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s:157    .text.SystemClock_Config:0000006c $d
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s:162    .text.main:00000000 $t
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s:168    .text.main:00000000 main
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s:435    .text.main:0000011c $d
+/var/folders/2t/dz2wf36n58l1r0cmb7nl3kb40000gq/T//cc4eGYC9.s:452    .rodata:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_uidiv

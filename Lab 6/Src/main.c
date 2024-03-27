@@ -99,7 +99,7 @@ int main(void)
   GPIOC->PUPDR &= ~(3 << 16);
   GPIOC->PUPDR &= ~(3 << 18);
 
-  // Part 1
+  // // Part 1
   // // Configure PC0 to analog mode, no pull-up/down resistors
   // GPIOC->MODER |= (3 << 0);
   // GPIOC->PUPDR &= ~(3 << 0);
@@ -179,14 +179,14 @@ int main(void)
   // Enable the DAC
   DAC->CR |= (1 << 0);
 
-// Square Wave: 8-bit, 32 samples/cycle
-const uint8_t square_table[32] = {254,254,254,254,254,254,254,254,254,254,
-254,254,254,254,254,254,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+// Sine Wave: 8-bit, 32 samples/cycle
+const uint8_t sine_table[32] = {127,151,175,197,216,232,244,251,254,251,244,
+232,216,197,175,151,127,102,78,56,37,21,9,2,0,2,9,21,37,56,78,102};
 
   // Write the square wave to the DAC
   while(1){
     for(int i = 0; i < 32; i++){
-      DAC->DHR8R1 = square_table[i];
+      DAC->DHR8R1 = sine_table[i];
       // Wait 1ms
       HAL_Delay(1);
     }
