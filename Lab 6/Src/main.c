@@ -69,8 +69,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   SystemClock_Config();
-
-    // Enable GPIOB and GPOIC
+  // Enable and GPOIC
   RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
 
   // Enable LED's 6-9
@@ -100,68 +99,100 @@ int main(void)
   GPIOC->PUPDR &= ~(3 << 16);
   GPIOC->PUPDR &= ~(3 << 18);
 
-  // Configure PC0 to analog mode, no pull-up/down resistors
-  GPIOC->MODER |= (3 << 0);
-  GPIOC->PUPDR &= ~(3 << 0);
+  // Part 1
+  // // Configure PC0 to analog mode, no pull-up/down resistors
+  // GPIOC->MODER |= (3 << 0);
+  // GPIOC->PUPDR &= ~(3 << 0);
 
-  // Enable the ADC clock
-  RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;
+  // // Enable the ADC clock
+  // RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;
 
-  // Set the ADC to 8-bit
-  ADC1->CFGR1 &= ~(3 << 3);
-  ADC1->CFGR1 |= (2 << 3);
+  // // Set the ADC to 8-bit
+  // ADC1->CFGR1 &= ~(3 << 3);
+  // ADC1->CFGR1 |= (2 << 3);
 
-  // Set continuous conversion mode
-  ADC1->CFGR1 |= (1 << 13);
+  // // Set continuous conversion mode
+  // ADC1->CFGR1 |= (1 << 13);
 
-  // Hardware trigger disabled
-  ADC1->CFGR1 &= ~(1 << 0);
+  // // Hardware trigger disabled
+  // ADC1->CFGR1 &= ~(1 << 0);
 
-  // PC0 is input channel ADC_IN10
-  ADC1->CHSELR |= (1 << 10);
+  // // PC0 is input channel ADC_IN10
+  // ADC1->CHSELR |= (1 << 10);
 
-  // Begin the calibration
-  ADC1->ISR |= (1 << 31); // Set the ADRDY bit to 1
-  ADC1->CR |= (1 << 0); // Set the ADEN bit to 1
+  // // Begin the calibration
+  // ADC1->ISR |= (1 << 31); // Set the ADRDY bit to 1
+  // ADC1->CR |= (1 << 0); // Set the ADEN bit to 1
 
-  // Wait for calibration to finish
-  while ((ADC1->ISR & (1 << 0)) == 0) {
-    // Wait for the ADRDY bit to be 1
-  }
+  // // Wait for calibration to finish
+  // while ((ADC1->ISR & (1 << 0)) == 0) {
+  //   // Wait for the ADRDY bit to be 1
+  // }
 
-  // Start the ADC
-  ADC1->CR |= (1 << 2);
+  // // Start the ADC
+  // ADC1->CR |= (1 << 2);
 
+  // while(1){
+  //   // Read the values of the ADC and turn on and off LEDs based on the value
+  //   // Using a 100k potentiometer hooked up to PC0, operating in 8-bit mode
+  //   // gives us a value between 0-255.
+
+  //   if(ADC1->DR < 64){
+  //     GPIOC->ODR |= (1 << 6);
+  //     GPIOC->ODR &= ~(1 << 7);
+  //     GPIOC->ODR &= ~(1 << 8);
+  //     GPIOC->ODR &= ~(1 << 9);
+  //   }
+  //   else if(ADC1->DR < 128){
+  //     GPIOC->ODR |= (1 << 6);
+  //     GPIOC->ODR |= (1 << 7);
+  //     GPIOC->ODR &= ~(1 << 8);
+  //     GPIOC->ODR &= ~(1 << 9);
+  //   }
+  //   else if(ADC1->DR < 192){
+  //     GPIOC->ODR |= (1 << 6);
+  //     GPIOC->ODR |= (1 << 7);
+  //     GPIOC->ODR |= (1 << 8);
+  //     GPIOC->ODR &= ~(1 << 9);
+  //   }
+  //   else{
+  //     GPIOC->ODR |= (1 << 6);
+  //     GPIOC->ODR |= (1 << 7);
+  //     GPIOC->ODR |= (1 << 8);
+  //     GPIOC->ODR |= (1 << 9);
+  //   }
+  // }
+  
+  // Part 2
+  // Set PA4 to analog mode, no pull-up/pull-down resistors
+  RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+  GPIOA->MODER |= (3 << 8);
+  GPIOA->PUPDR &= ~(3 << 8);
+
+  // Set DAC to software trigger mode
+  RCC->APB1ENR |= RCC_APB1ENR_DACEN;
+  DAC->CR |= (1 << 3);
+
+  // Set DAC to 8-bit mode
+  DAC->CR &= ~(1 << 12);
+
+  // Enable the DAC
+  DAC->CR |= (1 << 0);
+
+// Square Wave: 8-bit, 32 samples/cycle
+const uint8_t square_table[32] = {254,254,254,254,254,254,254,254,254,254,
+254,254,254,254,254,254,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+  // Write the sine wave to the DAC
   while(1){
-    // Read the values of the ADC and turn on and off LEDs based on the value
-    // Using a 100k potentiometer hooked up to PC0, operating in 8-bit mode
-    // gives us a value between 0-255.
-
-    if(ADC1->DR < 64){
-      GPIOC->ODR |= (1 << 6);
-      GPIOC->ODR &= ~(1 << 7);
-      GPIOC->ODR &= ~(1 << 8);
-      GPIOC->ODR &= ~(1 << 9);
-    }
-    else if(ADC1->DR < 128){
-      GPIOC->ODR |= (1 << 6);
-      GPIOC->ODR |= (1 << 7);
-      GPIOC->ODR &= ~(1 << 8);
-      GPIOC->ODR &= ~(1 << 9);
-    }
-    else if(ADC1->DR < 192){
-      GPIOC->ODR |= (1 << 6);
-      GPIOC->ODR |= (1 << 7);
-      GPIOC->ODR |= (1 << 8);
-      GPIOC->ODR &= ~(1 << 9);
-    }
-    else{
-      GPIOC->ODR |= (1 << 6);
-      GPIOC->ODR |= (1 << 7);
-      GPIOC->ODR |= (1 << 8);
-      GPIOC->ODR |= (1 << 9);
+    for(int i = 0; i < 32; i++){
+      DAC->DHR8R1 = square_table[i];
+      // Wait 1ms
+      HAL_Delay(1);
     }
   }
+
+
 
 
 
