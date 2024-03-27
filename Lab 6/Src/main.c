@@ -183,7 +183,7 @@ int main(void)
 const uint8_t square_table[32] = {254,254,254,254,254,254,254,254,254,254,
 254,254,254,254,254,254,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-  // Write the sine wave to the DAC
+  // Write the square wave to the DAC
   while(1){
     for(int i = 0; i < 32; i++){
       DAC->DHR8R1 = square_table[i];
